@@ -1,14 +1,24 @@
-public class BinaryTree {
+public class BinarySearchTree {
 
-    Node root;
+    private Node root;
+    private Node max;
+    private Node min;
+
+    public BinarySearchTree(Node root) {
+        this.root = root;
+        this.max = root;
+        this.min = root;
+    }
 
     public void setRoot(Node root) {
         this.root = root;
     }
-
+    
     public Node getRoot() {
         return root;
     }
+
+
 
     public Node findIterative(Node node) {
         Node current = root;
@@ -55,12 +65,12 @@ public class BinaryTree {
         }
         Node current = root;
 
-        while (current.data != node.data){
+        while (node.data != current.data){
             if (node.data < current.data) {
                 if (current.leftChild == null){
                     current.leftChild = node;
-                } else
-                    current = current.leftChild;
+                }
+                current = current.leftChild;
             }
             if (node.data > current.data){
                 if (current.rightChild == null){
@@ -116,6 +126,24 @@ public class BinaryTree {
             traversePostOrder(node.rightChild);
             System.out.println(node.data);
         }
+    }
+
+    public Node getMax(Node node){
+        if (node.rightChild != null){
+            if (node.rightChild.data > max.data)
+                max = node.rightChild;
+            getMax(node.rightChild);
+        }
+        return max;
+    }
+
+    public Node getMin(Node node){
+        if (node.leftChild != null){
+            if (node.leftChild.data < min.data)
+                min = node.leftChild;
+            getMin(node.leftChild);
+        }
+        return min;
     }
 
 }
